@@ -1,0 +1,20 @@
+.page         { display: flex; flex-direction: column; gap: 24px; }
+.loading      { color: var(--text-muted); padding: 60px; text-align: center; }
+.header       { display: flex; justify-content: space-between; align-items: flex-start; }
+.name         { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.badges       { display: flex; gap: 6px; }
+.grid         { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.sectionTitle { font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em; }
+.dl           { display: flex; flex-direction: column; gap: 10px; }
+.row          { display: flex; justify-content: space-between; font-size: 13px; }
+.row dt       { color: var(--text-muted); }
+.row dd       { color: var(--text); font-weight: 500; word-break: break-all; }
+.actions      { display: flex; flex-wrap: wrap; gap: 8px; }
+.status {
+  background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 16px; font-size: 12px; font-family: monospace; color: var(--text-muted);
+  white-space: pre-wrap; max-height: 300px; overflow-y: auto;
+}
+.star { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-muted); transition: color 0.15s; }
+.star:hover { color: var(--yellow); }
+.starred    { color: var(--yellow) !important; }

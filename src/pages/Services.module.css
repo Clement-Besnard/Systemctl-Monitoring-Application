@@ -1,0 +1,13 @@
+.page    { display: flex; flex-direction: column; gap: 24px; }
+.toolbar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.search  {
+  flex: 1; min-width: 200px;
+  background: var(--bg-card); color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 9px 14px; font-size: 13px;
+  transition: border-color 0.15s;
+}
+.search:focus { outline: none; border-color: var(--accent); }
+.filters { display: flex; gap: 6px; }
+.grid    { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.loading { color: var(--text-muted); text-align: center; padding: 60px; }

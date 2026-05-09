@@ -1,0 +1,32 @@
+services:
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - API_HOST=server
+
+  server:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket  # D-Bus déjà présent ✅
+      - /run/systemd:/run/systemd:ro                              # ← AJOUTER
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro                         # ← AJOUTER
+    environment:
+      - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket
+      - SYSTEMCTL_FORCE_BUS=1
+    privileged: true    # ← passer à true
+    env_file:
+      - .env

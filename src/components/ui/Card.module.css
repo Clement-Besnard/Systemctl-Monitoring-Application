@@ -1,0 +1,9 @@
+.card {
+  background:    var(--bg-card);
+  border:        1px solid var(--border);
+  border-radius: var(--radius);
+  padding:       24px;
+  transition:    border-color 0.2s;
+}
+.card:hover { border-color: #2a2a3e; }
+.glow       { box-shadow: 0 0 40px var(--accent-glow); border-color: rgba(124,106,247,0.3); }
