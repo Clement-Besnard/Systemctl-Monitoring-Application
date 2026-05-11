@@ -1,17 +1,31 @@
 .layout {
   display: grid;
-  grid-template-columns: 240px 1fr;
+  grid-template-columns: 250px 1fr;
   min-height: 100vh;
+  position: relative;
+  z-index: 1;
 }
 
 .main {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background: transparent;
 }
 
 .content {
-  padding: 32px;
+  padding: 36px;
   overflow-y: auto;
   flex: 1;
+  position: relative;
+}
+
+.content::before {
+  content: '';
+  position: fixed;
+  top: 0; right: 0;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(124, 106, 247, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
 }

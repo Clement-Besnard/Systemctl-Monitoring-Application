@@ -1,4 +1,4 @@
-const BASE = "/services";
+const BASE = "/api/services";
 
 export const getServices       = (state)        => fetch(`${BASE}${state ? `?state=${state}` : ""}`).then(r => r.json());
 export const getFailedServices = ()             => fetch(`${BASE}/failed`).then(r => r.json());

@@ -1,23 +1,44 @@
+/* ── Google Fonts ───────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
 /* ── Variables ─────────────────────────────────────────────── */
 :root {
-  --bg:          #0a0a0f;
-  --bg-card:     #111118;
-  --bg-hover:    #1a1a24;
-  --border:      #1e1e2e;
-  --accent:      #7c6af7;
-  --accent-glow: rgba(124, 106, 247, 0.25);
-  --green:       #22d3a0;
-  --red:         #f25f5c;
-  --yellow:      #f5c542;
-  --text:        #e2e2f0;
-  --text-muted:  #5a5a7a;
-  --radius:      12px;
-  --radius-sm:   8px;
-  --font:        "Inter", system-ui, sans-serif;
+  --bg:           #04040a;
+  --bg-card:      #0d0d18;
+  --bg-hover:     #13132a;
+  --bg-glass:     rgba(13, 13, 24, 0.7);
+  --border:       rgba(124, 106, 247, 0.12);
+  --border-hover: rgba(124, 106, 247, 0.35);
+  --accent:       #7c6af7;
+  --accent-2:     #a78bfa;
+  --accent-glow:  rgba(124, 106, 247, 0.2);
+  --aurora-1:     rgba(124, 106, 247, 0.08);
+  --aurora-2:     rgba(56, 189, 248, 0.06);
+  --aurora-3:     rgba(34, 211, 160, 0.05);
+  --green:        #22d3a0;
+  --green-glow:   rgba(34, 211, 160, 0.25);
+  --red:          #f25f5c;
+  --red-glow:     rgba(242, 95, 92, 0.25);
+  --yellow:       #fbbf24;
+  --yellow-glow:  rgba(251, 191, 36, 0.25);
+  --cyan:         #38bdf8;
+  --text:         #e8e8f8;
+  --text-muted:   #6b6b9a;
+  --text-dim:     #3a3a5c;
+  --radius:       14px;
+  --radius-sm:    9px;
+  --radius-lg:    20px;
+  --font:         "Inter", system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", monospace;
+  --shadow:       0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-glow:  0 0 30px rgba(124, 106, 247, 0.15);
+  --transition:   all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ── Reset ──────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
 
 body {
   background:  var(--bg);
@@ -26,10 +47,43 @@ body {
   font-size:   14px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ── Aurora background ──────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% -10%, var(--aurora-1), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 100%, var(--aurora-2), transparent),
+    radial-gradient(ellipse 50% 60% at 50% 50%, var(--aurora-3), transparent);
+  pointer-events: none;
+  z-index: 0;
+  animation: aurora 12s ease-in-out infinite alternate;
+}
+
+@keyframes aurora {
+  0%   { opacity: 1; transform: scale(1) rotate(0deg); }
+  50%  { opacity: 0.7; transform: scale(1.05) rotate(1deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent), var(--cyan));
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent-2); }
+
+/* ── Selection ──────────────────────────────────────────────── */
+::selection {
+  background: rgba(124, 106, 247, 0.3);
+  color: var(--text);
 }
 
 a { color: inherit; text-decoration: none; }
-
-::-webkit-scrollbar       { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }

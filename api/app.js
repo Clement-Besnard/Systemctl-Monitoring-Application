@@ -34,8 +34,8 @@ app.get("/", (req, res) => {
   });
 });
 
-app.use("/services",  servicesRoutes);
-app.use("/favorites", favoritesRoutes);
+app.use("/api/services",  servicesRoutes);
+app.use("/api/favorites", favoritesRoutes);
 
 // Ces deux middlewares DOIVENT être en dernier
 app.use(notFound);

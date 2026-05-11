@@ -1,9 +1,48 @@
 .card {
-  background:    var(--bg-card);
-  border:        1px solid var(--border);
-  border-radius: var(--radius);
-  padding:       24px;
-  transition:    border-color 0.2s;
+  background: var(--bg-glass, rgba(13, 13, 24, 0.7));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg, 20px);
+  padding: 24px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
-.card:hover { border-color: #2a2a3e; }
-.glow       { box-shadow: 0 0 40px var(--accent-glow); border-color: rgba(124,106,247,0.3); }
+
+/* Top gradient line */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(124, 106, 247, 0.3), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-3px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(124, 106, 247, 0.05),
+    0 0 40px rgba(124, 106, 247, 0.04);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+/* Glow variant */
+.glow {
+  border-color: rgba(124, 106, 247, 0.3);
+  box-shadow:
+    0 0 40px rgba(124, 106, 247, 0.12),
+    0 0 80px rgba(124, 106, 247, 0.05),
+    inset 0 0 30px rgba(124, 106, 247, 0.03);
+}
+
+.glow::before {
+  opacity: 1;
+}

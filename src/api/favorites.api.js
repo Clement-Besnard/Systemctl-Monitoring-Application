@@ -1,4 +1,4 @@
-const BASE = "/favorites";
+const BASE = "/api/favorites";
 
 export const getFavorites     = ()     => fetch(BASE).then(r => r.json());
 export const addFavorite      = (name) => fetch(`${BASE}/${name}`, { method: "POST" }).then(r => r.json());

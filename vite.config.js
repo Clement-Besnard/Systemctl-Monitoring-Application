@@ -8,8 +8,8 @@ export default defineConfig({
   server: {
     host: true,
     proxy: {
-      "/services":  `http://${API_HOST}:5000`,
-      "/favorites": `http://${API_HOST}:5000`,
+      "/api/services":  `http://${API_HOST}:5000`,
+      "/api/favorites": `http://${API_HOST}:5000`,
     },
   },
 });

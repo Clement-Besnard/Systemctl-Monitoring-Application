@@ -1,14 +1,11 @@
-import { useState }     from "react";
-import { useServices }  from "../hooks/useServices.js";
-import ServiceCard      from "../components/ServiceCard.jsx";
-import Button           from "../components/ui/Button.jsx";
-import styles           from "./Services.module.css";
-
-const FILTERS = [null, "active", "inactive", "failed"];
+import { useState }    from "react";
+import { useServices } from "../hooks/useServices.js";
+import ServiceCard     from "../components/ServiceCard.jsx";
+import styles          from "./Services.module.css";
 
 export default function Services() {
-  const [filter, setFilter]   = useState(null);
-  const [search, setSearch]   = useState("");
+  const [filter, setFilter] = useState(null);
+  const [search, setSearch] = useState("");
   const { services, loading, refetch } = useServices(filter);
 
   const visible = services.filter(s =>
@@ -19,28 +16,60 @@ export default function Services() {
     <div className={styles.page}>
       <div className={styles.toolbar}>
         <input
-          className={styles.search}
+          type="text"
           placeholder="Rechercher un service..."
+          className={styles.search}
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
         />
         <div className={styles.filters}>
-          {FILTERS.map(f => (
-            <Button key={f ?? "all"} size="sm"
-              variant={filter === f ? "primary" : "default"}
-              onClick={() => setFilter(f)}>
-              {f ?? "Tous"}
-            </Button>
-          ))}
+          <button
+            className={`${styles.filterBtn} ${filter === null ? styles.filterActive : ''}`}
+            onClick={() => setFilter(null)}
+          >
+            Tous
+          </button>
+          <button
+            className={`${styles.filterBtn} ${styles.dotActive} ${filter === 'active' ? styles.dotActiveSelected : ''}`}
+            onClick={() => setFilter('active')}
+          >
+            active
+          </button>
+          <button
+            className={`${styles.filterBtn} ${styles.dotInactive} ${filter === 'inactive' ? styles.filterActive : ''}`}
+            onClick={() => setFilter('inactive')}
+          >
+            inactive
+          </button>
+          <button
+            className={`${styles.filterBtn} ${styles.dotFailed} ${filter === 'failed' ? styles.dotFailedSelected : ''}`}
+            onClick={() => setFilter('failed')}
+          >
+            failed
+          </button>
         </div>
       </div>
 
-      {loading
-        ? <div className={styles.loading}>Chargement...</div>
-        : <div className={styles.grid}>
-            {visible.map(s => <ServiceCard key={s.unit} service={s} onRefetch={refetch} />)}
-          </div>
-      }
+      <div className={styles.grid}>
+        {loading
+          ? Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className={styles.skeleton} style={{ animationDelay: `${i * 0.07}s` }}>
+                <div className={styles.skeletonLine} style={{ width: '55%' }} />
+                <div className={styles.skeletonLine} style={{ width: '80%', height: '10px', marginTop: '6px' }} />
+                <div className={styles.skeletonBadge} />
+                <div className={styles.skeletonActions}>
+                  <div className={styles.skeletonBtn} />
+                  <div className={styles.skeletonBtn} style={{ width: '60px' }} />
+                </div>
+              </div>
+            ))
+          : visible.map((service, i) => (
+              <div key={service.unit} style={{ animation: `fadeInUp 0.4s ease both`, animationDelay: `${i * 0.05}s` }}>
+                <ServiceCard service={service} onRefetch={refetch} />
+              </div>
+            ))
+        }
+      </div>
     </div>
   );
 }
