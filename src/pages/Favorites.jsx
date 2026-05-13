@@ -3,7 +3,15 @@ import ServiceCard      from "../components/ServiceCard.jsx";
 import styles           from "./Favorites.module.css";
 
 export default function Favorites() {
-  const { favorites, loading, refetch } = useFavorites();
+  const { favorites, setFavorites, loading, refetch } = useFavorites();
+
+  function handleFavoriteToggle(unit, isFav) {
+    if (!isFav) {
+      // Retiré des favoris → on le supprime de la liste
+      setFavorites(prev => prev.filter(s => s.name !== unit));
+    }
+    // isFav === true ne peut pas arriver ici (déjà en favoris)
+  }
 
   return (
     <div className={styles.page}>
@@ -34,7 +42,11 @@ export default function Favorites() {
               key={s.name}
               style={{ animation: 'fadeInUp 0.4s ease both', animationDelay: `${i * 0.05}s` }}
             >
-              <ServiceCard service={{ ...s, unit: s.name }} onRefetch={refetch} />
+              <ServiceCard
+                service={{ ...s, unit: s.name, favorite: true }}  // ← force true
+                onRefetch={refetch}
+                onFavoriteToggle={handleFavoriteToggle}            // ← optimistic
+              />
             </div>
           ))}
         </div>

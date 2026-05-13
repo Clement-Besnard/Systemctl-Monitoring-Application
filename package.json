@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev":         "concurrently \"npm run dev:server\" \"npm run dev:client\"",
-    "dev:server":  "cd api && nodemon server.js",
+    "dev:server":  "cd api && nodemon --ignore favorites.json server.js",
     "dev:client":  "vite --host",
     "build":       "vite build --host",
     "preview":     "vite preview"

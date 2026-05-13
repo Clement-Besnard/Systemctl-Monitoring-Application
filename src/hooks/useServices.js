@@ -6,6 +6,7 @@ export function useServices(stateFilter) {
   const [loading,  setLoading]  = useState(true);
   const [error,    setError]    = useState(null);
 
+
   const fetch = useCallback(async () => {
     try {
       setLoading(true);
@@ -18,8 +19,9 @@ export function useServices(stateFilter) {
     }
   }, [stateFilter]);
 
+
   useEffect(() => { fetch(); }, [fetch]);
-  return { services, loading, error, refetch: fetch };
+  return { services, setServices, loading, error, refetch: fetch }; // ← setServices ajouté
 }
 
 export function useFailed() {

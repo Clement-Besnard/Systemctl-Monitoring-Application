@@ -6,7 +6,14 @@ import styles          from "./Services.module.css";
 export default function Services() {
   const [filter, setFilter] = useState(null);
   const [search, setSearch] = useState("");
-  const { services, loading, refetch } = useServices(filter);
+  const { services, setServices, loading, refetch } = useServices(filter);
+
+  // Met à jour localement sans GET /services
+  function handleFavoriteToggle(unit, isFav) {
+    setServices(prev =>
+      prev.map(s => s.unit === unit ? { ...s, favorite: isFav } : s)
+    );
+  }
 
   const visible = services.filter(s =>
     s.unit.toLowerCase().includes(search.toLowerCase())
@@ -65,7 +72,11 @@ export default function Services() {
             ))
           : visible.map((service, i) => (
               <div key={service.unit} style={{ animation: `fadeInUp 0.4s ease both`, animationDelay: `${i * 0.05}s` }}>
-                <ServiceCard service={service} onRefetch={refetch} />
+                <ServiceCard
+                  service={service}
+                  onRefetch={refetch}
+                  onFavoriteToggle={handleFavoriteToggle}  // ← nouveau
+                />
               </div>
             ))
         }

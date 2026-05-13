@@ -6,17 +6,30 @@ import { serviceAction } from "../api/services.api.js";
 import { addFavorite, removeFavorite } from "../api/favorites.api.js";
 import styles           from "./ServiceCard.module.css";
 
-export default function ServiceCard({ service, onRefetch }) {
+export default function ServiceCard({ service, onRefetch, onFavoriteToggle }) {
   const navigate = useNavigate();
+
+  async function toggleFavorite() {
+    const newFav = !service.favorite;
+
+    // 1. Update immédiat — aucun lag
+    if (onFavoriteToggle) onFavoriteToggle(service.unit, newFav);
+
+    try {
+      // 2. Appel API en arrière-plan
+      if (newFav) await addFavorite(service.unit);
+      else        await removeFavorite(service.unit);
+    } catch (e) {
+      // 3. Rollback si erreur
+      console.error(e);
+      if (onFavoriteToggle) onFavoriteToggle(service.unit, !newFav);
+      else onRefetch?.();
+    }
+  }
 
   async function handleAction(action) {
     await serviceAction(service.unit, action);
-    onRefetch?.();
-  }
-
-  async function toggleFavorite() {
-    service.favorite ? await removeFavorite(service.unit) : await addFavorite(service.unit);
-    onRefetch?.();
+    onRefetch?.(); // ← ici on veut bien refetch (start/stop/restart)
   }
 
   return (
